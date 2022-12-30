@@ -18,9 +18,9 @@ st.subheader('Conversion Status')
 
 if st.button('Generate Prediction'):
 	if Status == 1:
-		st.write('YES')
+		st.write('CONVERTED')
 	elif Status == 0:
-		st.write('NO')
+		st.write('NOT CONVERTED')
 	else:
 		st.write("Please fill inputs ")
 

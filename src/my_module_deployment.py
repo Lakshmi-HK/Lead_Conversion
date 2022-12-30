@@ -4,15 +4,11 @@ import pickle
 import sklearn
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import OrdinalEncoder
-from category_encoders.binary import BinaryEncoder
-oe = OrdinalEncoder()
-b = BinaryEncoder()
-
-#cols = ['Lead Source', 'TotalVisits',
-       #'Total Time Spent on Website', 'Page Views Per Visit',
-       #'Specialization', 'How did you hear about X Education',
-      # 'Last Notable Activity']
+from sklearn.preprocessing import LabelEncoder
+#from category_encoders import OneHotEncoder, BaseNEncoder
+#from category_encoders.binary import BinaryEncoder
+le = LabelEncoder()
+#b = BinaryEncoder()
 
 def user_report():
     lead_source = st.selectbox('Lead Source', ('Online Chat', 'Organic Search', 'Reference', 'Social Media',
@@ -55,9 +51,9 @@ def user_report():
                        }
 
     df = pd.DataFrame(user_report_data, index=[0])
-    df['lead_source'] = b.fit_transform(np.array(df['lead_source']).reshape(1,-1))
-    df['specialization'] = b.fit_transform(np.array(df['specialization']).reshape(1,-1))
-    df['hear_about'] = b.fit_transform(np.array(df['hear_about']).reshape(1,-1))
-    df['last_activity'] = b.fit_transform(np.array(df['last_activity']).reshape(1,-1))
-    #df = np.array(df.reshape(1,-1))
+    df['lead_source'] = le.fit_transform(df['lead_source'])
+    df['specialization'] = le.fit_transform(df['specialization'])
+    df['hear_about'] = le.fit_transform(df['hear_about'])
+    df['last_activity'] = le.fit_transform(df['last_activity'])
+    #df['last_activity'] = o.fit_transform(np.array(df['last_activity']).reshape(1,-1))
     return df
